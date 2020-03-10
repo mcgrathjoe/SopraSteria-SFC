@@ -1971,7 +1971,7 @@ const printLine = (readable, reportType, errors, sep) => {
     readable.push(`${sep}${key}${sep}`);
     errors[key].forEach(item => {
       if (reportType === 'training') {
-        return readable.push(`For worker with ${item.name} Subsidiary 3 and UNIQUEWORKERID ${item.worker} on line ${item.lineNumber}${sep}`);
+        return readable.push(`For worker with LOCALESTID ${item.name} and UNIQUEWORKERID ${item.worker} on line ${item.lineNumber}${sep}`);
       } else if (reportType === 'establishments') {
         return readable.push(`For establishment called ${item.name} on line ${item.lineNumber}${sep}`);
       } else if (reportType === 'workers') {
