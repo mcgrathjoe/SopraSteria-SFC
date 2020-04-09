@@ -154,15 +154,15 @@ export class AddMandatoryTrainingComponent implements OnInit {
     this.serverErrorsMap = [
       {
         name: 503,
-        message: 'We could not send request to mandatory traning. You can try again or contact us.',
+        message: 'We could not send request to mandatory training. You can try again or contact us.',
       },
       {
         name: 400,
-        message: 'Unable to send request to mandatory traning.',
+        message: 'Unable to send request to mandatory training.',
       },
       {
         name: 404,
-        message: 'Send request to mandatory traning service not found. You can try again or contact us.',
+        message: 'Send request to mandatory training service not found. You can try again or contact us.',
       },
     ];
   }
@@ -292,7 +292,7 @@ export class AddMandatoryTrainingComponent implements OnInit {
   //update vacancy array on vanancy type change
   public onVacancyTypeSelectionChange(index: number) {
     const vacancyType = this.categoriesArray.controls[index].get('vacancyType').value;
-    let vacanciesArray = <FormArray>(<FormGroup>this.categoriesArray.controls[index]).controls.vacancies;
+    let vacanciesArray = <FormArray>(<FormGroup>this.categoriesArray.controls['trainingCategory-' + index]).controls.vacancies;
     if (vacancyType === mandatoryTrainingJobOption.all) {
       while (vacanciesArray.length > 0) {
         vacanciesArray.removeAt(0);
@@ -305,10 +305,22 @@ export class AddMandatoryTrainingComponent implements OnInit {
 
   //chek form validity and set mandatory traing
   public onSubmit() {
+    Object.keys(this.form.controls.categories.controls).map(name => {
+      this.formErrorsMap.push({
+        item: 'trainingCategory-' + name,
+        type: [
+          {
+            name: 'required',
+            message: 'Select the mandatory training',
+          },
+        ],
+      });
+    });
+    console.log(this.formErrorsMap);
     this.submitted = true;
     if (!this.form.valid) {
-      this.errorSummaryService.scrollToErrorSummary();
-      return;
+    this.errorSummaryService.scrollToErrorSummary();
+    return;
     }
     const props = this.generateUpdateProps();
     this.updateMandatoryTraining(props);

@@ -27,18 +27,20 @@
               </label>
               <span *ngIf="submitted" id="trainingCategory-{{ i }}-error" class="govuk-error-message">
                 <ng-container *ngIf="submitted && category.get('trainingCategory').invalid">
-                  {{ getFormErrorMessage('categories.trainingCategory', 'required') }}
+                  {{ getFormErrorMessage('trainingCategory-' + i, 'required') }}
                 </ng-container>
               </span>
               <select class="govuk-select govuk-!-width-full"
                 [class.govuk-select--error]="submitted && category.get('trainingCategory').invalid"
-                [formControlName]="'trainingCategory'" id="trainingCategory-{{ i }}" name="trainingCategory">
+                [formControlName]="'trainingCategory-' + i" id="trainingCategory-{{ i }}"
+                name="trainingCategory-{{ i }}">
                 <option [ngValue]="null">Select training category</option>
                 <option *ngFor="let training of selectableTrainings(i)" [value]="training.id">
                   {{ training.category }}
                 </option>
               </select>
             </div>
+
             <div class="govuk-grid-column-one-third govuk-!-margin-top-8">
               <a *ngIf="categoriesArray.length > 1" href="#" class="govuk-list govuk-list--inline "
                 (click)="removeCategory($event, i)">
